@@ -70,9 +70,16 @@ else
 end
 if(0)
     double(subs(Hi/alp*ip(3),[mTM,mRE],[mmTM,mmRE]))
+    
     double(subs(J0RERE*mRE/muRE,[mTM,mRE],[mmTM,mmRE]))
-    double(subs(HeffRE,[mTM,mRE],[mmTM,mmRE]))
+    double(subs(J0TMTM*mTM/muTM,[mTM,mRE],[mmTM,mmRE]))
     double(subs(J0RETM*mTM/muRE,[mTM,mRE],[mmTM,mmRE]))
+    double(subs(J0TMRE*mRE/muTM,[mTM,mRE],[mmTM,mmRE]))
+    
+    double(subs(HARE,mRE,mmRE))
+    double(subs(HATM,mTM,mmTM))
+    double(subs(HeffRE,[mTM,mRE],[mmTM,mmRE]))
+    
     
     HRE_MFA=(muRE*HeffRE+J0RERE*mRE+J0RETM*mTM+muRE*Hi/alp*ip(3))/muRE;%eqn5
     

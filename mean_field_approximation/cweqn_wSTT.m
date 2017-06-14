@@ -23,8 +23,8 @@ Hi=Js*hbar/(2*elev*MsT*tFL);
 elseif addSTT
 Hi=ita*PFL*Jc*hbar/(2*elev*MsT*tFL);
 end
-HRE_MFA=(muRE*HeffRE+J0RERE*mRE+J0RETM*mTM+muRE*Hi/alp*ip(3))/muRE;%eqn5
-HTM_MFA=(muTM*HeffTM+J0TMTM*mTM+J0TMRE*mRE+muTM*Hi/alp*ip(3))/muTM;%eqn6
+HRE_MFA=(muRE*HeffRE+J0RERE*mRE+J0RETM*mTM+muRE*Hi.*ip/alp)/muRE;%eqn5
+HTM_MFA=(muTM*HeffTM+J0TMTM*mTM+J0TMRE*mRE+muTM*Hi.*ip/alp)/muTM;%eqn6
 
 %eqn 8
 xiRE=muRE*HRE_MFA/(kb*T);

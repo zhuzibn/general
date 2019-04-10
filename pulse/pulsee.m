@@ -13,7 +13,7 @@ if (runtime+starttime)<(starttime+pulsewidth)
 end
 jc_=pulsee(starttime,totstep,tstep,pulsewidth,risetime,downtime,Jc0,t_);
 %}
-function jc_=pulsee(starttime,endtime,tstep,pulsewidth,risetime,downtime,jc)
+function jc_=pulsee(starttime,endstep,tstep,pulsewidth,risetime,downtime,jc,t_)
 if (0)%example
     starttime=1e-9;%[s]
     endtime=10e-9;%[s]
@@ -29,12 +29,7 @@ startstep=floor(starttime/tstep);
 risestep=floor(risetime/tstep);
 downstep=floor(downtime/tstep);
 stablestep=floor(stabletime/tstep);
-endstep=floor(endtime/tstep);
 
-if endtime<(starttime+pulsewidth)
-    error('endtime has to be larger than starttime+pulsewidth')
-end
-t_=linspace(0,endtime,endstep);
 jc_=[zeros(1,startstep),linspace(0,jc,risestep),jc*ones(1,stablestep),...
     linspace(jc,0,downstep),zeros(1,endstep-startstep-risestep-stablestep-downstep)];
 if (1)

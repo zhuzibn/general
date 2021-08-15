@@ -12,7 +12,7 @@
 %plot3dflg
 %scale2d: scale factor of the arrow size in 2D plot
 %scale3d
-function dwplot(xmesh,ymesh,zmesh,xmin,xmax,cellsizex,xplotstep,ymin,ymax,cellsizey,yplotstep,dattt,plot2dflg,plot3dflg,scale2d,scale3d)
+function [X,Y,Z,u,v,k]=dwplot(xmesh,ymesh,zmesh,xmin,xmax,cellsizex,xplotstep,ymin,ymax,cellsizey,yplotstep,dattt,plot2dflg,plot3dflg,scale2d,scale3d)
 if ~(mod(xmesh,xplotstep)==0)
     error('xmesh need to be integer times of xplotstep')
 end

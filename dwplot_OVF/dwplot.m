@@ -32,10 +32,15 @@ locz=zmesh;
 
 if plot2dflg
     figure;
-    if plotip
-    quiver(X,Y,u,k,scale2d,'k')
-    else
-    quiver(X,Y,u,v,scale2d,'k')    
+    switch plotip
+        case 0
+            quiver(X,Y,u,v,scale2d,'k')
+        case 1
+            quiver(X,Y,u,v,scale2d,'k')
+        case 2
+            quiver(X,Y,u,k,scale2d,'k')
+        case 3
+            quiver(X,Y,v,k,scale2d,'k')
     end
 elseif plot3dflg
     figure;

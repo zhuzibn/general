@@ -18,8 +18,7 @@ xlimminplot=80;
 xlimmaxplot=200;
 ylimminplot=70;
 ylimmaxplot=80;
-plotip=0;%0:plot in-plane magnet; 1:plot perpendicular magnet,
-%modify to differentiate i-Bloch, i-Neel, p-Bloch, p-Neel
+plotip=0;%0:in-plane Neel wall; 1:in-plane Bloch wall or head to head; 2: perpendicular Neel wall; 3: perpendicular Bloch wall
 generatemovie=0;
 findDWcenter=0;
 ticknum=6;

@@ -47,7 +47,8 @@ dattt=importdata('test.txt');
 delete test.txt
 
 %% plott
-[X,Y,Z,u,v,k]=dwplot(xmesh,ymesh,zmesh,xmin,xmaxplot,cellsizex,xplotstep,ymin,ymaxplot,cellsizey,yplotstep,dattt,plot2dflg,plot3dflg,scale2d,scale3d)
+plotip=1;%0:plot in-plane magnet; 1:plot perpendicular magnet
+[X,Y,Z,u,v,k]=dwplot(xmesh,ymesh,zmesh,xmin,xmaxplot,cellsizex,xplotstep,ymin,ymaxplot,cellsizey,yplotstep,dattt,plotip,plot2dflg,plot3dflg,scale2d,scale3d)
 if plot2dflg
     view(0,90)
     txt = ['length(nm) x ',num2str(xscal)];

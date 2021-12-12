@@ -18,10 +18,11 @@ xlimminplot=80;
 xlimmaxplot=200;
 ylimminplot=70;
 ylimmaxplot=80;
-plotip=0;%0:plot in-plane magnet; 1:plot perpendicular magnet,  
+plotip=0;%0:plot in-plane magnet; 1:plot perpendicular magnet,
 %modify to differentiate i-Bloch, i-Neel, p-Bloch, p-Neel
 generatemovie=0;
 findDWcenter=0;
+ticknum=6;
 %datname=sprintf('m%0.6d.ovf',datrange(ctdat));
 datname=sprintf('relaxed_m.ovf');
 %% values from mx3 file
@@ -35,10 +36,19 @@ xmin=0;
 ymin=0;
 xmax=xmesh*cellsizex;
 ymax=ymesh*cellsizey;
+xmaxplot=ymax*2;%2 is an arbitary number, just to show x size is larger than y
+ymaxplot=ymax;
+xscal=xmax/xmaxplot;
+yscal=ymax/ymaxplot;
+tmp1=round(xmaxplot/ticknum);
+tmp2=round(xmax/ticknum);
+xtickk=[0,linspace(tmp1,tmp1*ticknum,ticknum)];
+xticklabell=[0,linspace(tmp2,tmp2*ticknum,ticknum)];
+clear tmp1 tmp2
 %% load the data
 if (1)
     % Read the file
-    fid = fopen('datname','r');
+    fid = fopen(datname,'r');
     str = textscan(fid,'%s','Delimiter','\n');
     fclose(fid);
     % skip the first 29 lines and load the rest data
@@ -53,11 +63,13 @@ dattt=importdata('test.txt');
 delete test.txt
 
 %% plott
-[X,Y,Z,u,v,k]=dwplot(xmesh,ymesh,zmesh,xmin,xmax,cellsizex,xplotstep,ymin,ymax,cellsizey,yplotstep,dattt,plotip,plot2dflg,plot3dflg,scale2d,scale3d);
+[X,Y,Z,u,v,k]=dwplot(xmesh,ymesh,zmesh,xmin,xmaxplot,cellsizex,xplotstep,ymin,ymaxplot,cellsizey,yplotstep,dattt,plotip,plot2dflg,plot3dflg,scale2d,scale3d);
 if plot2dflg
     view(0,90)
+    set(gca,'XTick',xtickk)
+    set(gca,'XTickLabel',xticklabell)
     xlabel('length(nm)');ylabel('width(nm)');
-    xlim([xmin xmax]);ylim([ymin ymax]*1.2);
+    xlim([xlimminplot xlimmaxplot]);ylim([ylimminplot ylimmaxplot]*1.2);
 elseif plot3dflg
     figure;
     quiver3(X,Y,Z,u,v,k,scale3d)
@@ -68,7 +80,7 @@ if generatemovie
     titlename=sprintf('title');
     M(ctdat) = getframe(gcf);
     
-    %add the following out of loop 
+    %add the following out of loop
     %{
     if generatemovie
     clear ctdat

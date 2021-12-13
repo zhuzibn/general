@@ -24,6 +24,7 @@ findDWcenter=0;
 ticknum=6;
 %datname=sprintf('m%0.6d.ovf',datrange(ctdat));
 datname=sprintf('relaxed_m.ovf');
+%titlename=sprintf('t=%dns,H=45mT',datrange(ctdat)/datrange(end)*runtime);
 %% values from mx3 file
 xmesh=512;%command gridsize(xmesh,ymesh,zmesh) in mumax3
 ymesh=30;
@@ -67,7 +68,16 @@ if plot2dflg
     view(0,90)
     set(gca,'XTick',xtickk)
     set(gca,'XTickLabel',xticklabell)
-    xlabel('length(nm)');ylabel('width(nm)');
+    switch plotip
+        case 0
+            xlabel('L(nm),mx');ylabel('W(nm),my');            
+        case 1
+            xlabel('L(nm),mx');ylabel('W(nm),my'); 
+        case 2
+            xlabel('L(nm),mx');ylabel('W(nm),mz'); 
+        case 3
+            xlabel('L(nm),my');ylabel('W(nm),mz'); 
+    end
     xlim([xlimminplot xlimmaxplot]);ylim([ylimminplot ylimmaxplot]*1.2);
 elseif plot3dflg
     figure;
@@ -76,7 +86,7 @@ end
 
 %% generate movie
 if generatemovie
-    titlename=sprintf('title');
+    title(titlename);
     M(ctdat) = getframe(gcf);
     
     %add the following out of loop

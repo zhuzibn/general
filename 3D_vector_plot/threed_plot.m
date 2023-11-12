@@ -1,5 +1,5 @@
 function threed_plot(plot_z_layer,gridL,gridW,numplotW,numplotL,plotzstep,plotWstep,plotLstep,...
-    atomtype_,mmx,mmy,mmz,natomL,natomW,natomz,plottime,plottimenew,arrowwidth,scale3d,plotmode)
+    atomtype_,mmx,mmy,mmz,natomL,natomW,natomz,plottime,plottimenew,arrowwidth,scale3d,plotmode,colorbarplot)
 
 switch plotmode
     case 0
@@ -17,7 +17,6 @@ switch plotmode
 end
 
 figure;hold on%initial magnetization
-colormap turbo
 for ctz=1:numplotz
     for ctL=1:numplotL
         for ctW=1:numplotW
@@ -42,10 +41,15 @@ for ctz=1:numplotz
             daspect manual
             switch plotmode
                 case 0
-                    if atomtype_(plotatomW,plotatomL)==0%TM
+                    if colorbarplot
+                        colormap turbo
                         arrow3(p1,p2,'|',arrowwidth);
                     else
-                        arrow3(p1,p2,'|',arrowwidth);
+                        if atomtype_(plotatomW,plotatomL)==0%TM
+                            arrow3(p1,p2,'r',arrowwidth);
+                        else
+                            arrow3(p1,p2,'b',arrowwidth);
+                        end
                     end
                 case 1
                     if atomtype_(plotatomW,plotatomL,plot_z_layer)==0%TM

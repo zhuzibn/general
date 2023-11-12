@@ -1,17 +1,20 @@
 clear all;close all;clc
 
 %% load data
-load('two-D-FM-skyrmion')
+load('three-D-FiM')
 
 %% parameters you can change
-plottime=199e-12;% the time you want to see the magnetization state
+plottime=499e-12;% the time you want to see the magnetization state
 plotWstep=1;%grid size along Width direction
 plotLstep=1;%grid size along length direction
 scale3d=0.5;%scale factor of the arrow size
 arrowwidth=10;
-plotmode=0;
+plotmode=2;
 %0:plot for 2D atomistic model;1:cross-section plot for 3D atomistic
 %model;2:plot for 3D atomistic model
+colorbarplot=0;%for FiM, choose 0 so that Fe and Gd are represented by red 
+% and blue, respectively. For FM, choose 1 so that the colorbar indicates
+% the magnitude of mz
 
 % movie options
 generatemovie=0;%1:generate movie, 0: no movie
@@ -38,8 +41,8 @@ mmx=mmx_show;
 mmy=mmy_show;
 mmz=mmz_show;
 
-natomW=size(mmx,2);
-natomL=size(mmx,1);
+natomW=size(mmx,1);
+natomL=size(mmx,2);
 natomz=size(mmx,3);
 if plotmode==0
     savedstep=size(mmx,3);%the third dimension of 2D atomistic model is time
@@ -53,10 +56,10 @@ gridL = 1:plotLstep:natomL;
 numplotW=size(gridW,2);
 numplotL=size(gridL,2);
 
-plottimenew=round((plottime/runtime)*savedstep);%the time used in the plot function
+plottimenew=round((plottime/runtime)*savedstep)+1;%the time used in the plot function
 
 threed_plot(plot_z_layer,gridL,gridW,numplotW,numplotL,plotzstep,plotWstep,plotLstep,...
-    atomtype_,mmx,mmy,mmz,natomL,natomW,natomz,plottime,plottimenew,arrowwidth,scale3d,plotmode)
+    atomtype_,mmx,mmy,mmz,natomL,natomW,natomz,plottime,plottimenew,arrowwidth,scale3d,plotmode,colorbarplot)
 
 if generatemovie
     for ct=1:plotsetp
@@ -80,7 +83,6 @@ if generatemovie
         end
 
         figure;hold on%initial magnetization
-        colormap turbo
         for ctz=1:numplotz
             for ctL=1:numplotL
                 for ctW=1:numplotW
@@ -105,10 +107,15 @@ if generatemovie
                     daspect manual
                     switch plotmode
                         case 0
-                            if atomtype_(plotatomW,plotatomL)==0%TM
+                            if colorbarplot
+                                colormap turbo
                                 arrow3(p1,p2,'|',arrowwidth);
                             else
-                                arrow3(p1,p2,'|',arrowwidth);
+                                if atomtype_(plotatomW,plotatomL)==0%TM
+                                    arrow3(p1,p2,'r',arrowwidth);
+                                else
+                                    arrow3(p1,p2,'b',arrowwidth);
+                                end
                             end
                         case 1
                             if atomtype_(plotatomW,plotatomL,plot_z_layer)==0%TM
